@@ -34,7 +34,7 @@ var curl = function(url, options, callback) {
     curlString += options.stringify();
 
     try {
-        cp.exec(curlString, function(err, stdout, stderr) {
+        cp.execFile(curlString, function(err, stdout, stderr) {
             callback(err, stdout, stderr);
         });
     } catch (err) {
