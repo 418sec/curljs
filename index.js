@@ -29,12 +29,14 @@ var curl = function(url, options, callback) {
         options = opts.follow_redirects().silent().max_redirs(5).connect_timeout(5);
     }
 
-    var curlString = 'curl "' + url + '" ';
+    var curlString = 'curl';
 
-    curlString += options.stringify();
+    options = options.stringify().split(" ").filter(function(str) {
+      return str != "" && str != null && str != undefined;
+    });
 
     try {
-        cp.exec(curlString, function(err, stdout, stderr) {
+        cp.execFile(curlString, [url, ...options], function(err, stdout, stderr) {
             callback(err, stdout, stderr);
         });
     } catch (err) {
